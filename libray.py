@@ -22,3 +22,23 @@ class User(BaseLine):
         super().__init__(id)
 
         self.name = name
+
+    
+    def borrow(self, book):
+
+        if book.borrowed:
+
+            print("Book not available")
+
+        else:
+
+            book.borrowed = True
+
+            print(f"{self.name} borrowed {book.title}")
+
+
+book1 = Book(1, "Rich Dad Poor Dad", "Robert Kiyosaki", 2001, "Finance")
+
+user1 = User(1, "Alice")
+
+user1.borrow(book1)
