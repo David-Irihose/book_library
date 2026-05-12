@@ -1,3 +1,6 @@
+import json
+
+
 class BaseLine:
 
     def __init__(self, id):
@@ -15,6 +18,35 @@ class Book(BaseLine):
         self.genre = genre
         self.borrowed = False
 
+    def to_dict(self):
+
+        return {
+            "id": self.id,
+            "title": self.title,
+            "author": self.author,
+            "year": self.year,
+            "genre": self.genre,
+            "borrowed": self.borrowed
+        }
+
+    def save(self):
+
+        try:
+
+            with open("books.json", "r") as file:
+                data = json.load(file)
+
+        except:
+
+            data = []
+
+        data.append(self.to_dict())
+
+        with open("books.json", "w") as file:
+            json.dump(data, file, indent=4)
+
+        print("Book saved")
+
 
 class User(BaseLine):
 
@@ -23,7 +55,6 @@ class User(BaseLine):
 
         self.name = name
 
-    
     def borrow(self, book):
 
         if book.borrowed:
@@ -39,6 +70,4 @@ class User(BaseLine):
 
 book1 = Book(1, "Rich Dad Poor Dad", "Robert Kiyosaki", 2001, "Finance")
 
-user1 = User(1, "Alice")
-
-user1.borrow(book1)
+book1.save()
